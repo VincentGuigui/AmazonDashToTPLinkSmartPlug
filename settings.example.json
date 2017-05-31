@@ -1,0 +1,6 @@
+{
+  "TPLINK_TOKEN": "a1b2c3d-460002228...",
+  "TPLINK_DEVICEID": "12345678900987654321...",
+  "DASH_HWID": "D:A:S:H:I:D",
+  "TPLINK_URL": "https://eu-wap.tplinkcloud.com/?token={}"
+}
