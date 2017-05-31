@@ -1,4 +1,4 @@
-Install Python prerequisites : requests and Scapy
+# Install Python prerequisites : requests and Scapy
 ``` 
 wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
@@ -7,7 +7,7 @@ python pip install requests
 python pip install scapy
 ```
 
-Configure your Amazon Dash Button
+# Configure your Amazon Dash Button
 * Start configuring your Amazon Dash using Amazon app 
 ** Configure the WiFi
 ** And stop before assigning a product
@@ -22,15 +22,16 @@ python DashToTPLinkPlug.py
 * CTRL-C to quit the script and return to the command line
 * Edit `settings.json` and set DASH_HWID
 
-Configure your TPLInk SmartPlug HS100
+# Configure your TPLInk SmartPlug HS100
 * Go through [Find TPLink Token and Smartplug Device ID article](http://arcturusenterprises.weebly.com/find-token--deviceid.html)
 * Edit `settings.json` and set TPLINK_TOKEN and TPLINK_DEVICEID
 
+# Starting the service for a long time
 You can know run the script in background with a command like this:
 ```
 nohup python DashToTPLinkPlug.py &
 ```
 
 
-Troubleshooting
+# Troubleshooting
 * if you encounter an "Token expired" error, verify that you are using a correct TPLINK_TOKEN
