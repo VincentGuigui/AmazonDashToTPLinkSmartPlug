@@ -9,8 +9,8 @@ python pip install scapy
 
 # Configure your Amazon Dash Button
 * Start configuring your Amazon Dash using Amazon app 
-** Configure the WiFi
-** And stop before assigning a product
+  * Configure the WiFi
+  * And stop before assigning a product
 * Run 
 ```
 python DashToTPLinkPlug.py
@@ -27,10 +27,14 @@ python DashToTPLinkPlug.py
 * Edit `settings.json` and set TPLINK_TOKEN and TPLINK_DEVICEID
 
 # Starting the service for a long time
-You can know run the script in background with a command like this:
+You can run the script in background with a command like this:
 ```
 nohup python DashToTPLinkPlug.py &
 ```
+or 
+``` StartInBackground.sh ```
+(the script need to be runned from the actual directory and will produce 
+a log file name DashToTPLinkPlug.log
 
 
 # Troubleshooting
