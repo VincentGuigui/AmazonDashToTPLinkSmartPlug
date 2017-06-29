@@ -38,8 +38,8 @@ def load_settings():
 		print "TPLINK Device alias is not defined. Please edit settings.json"
 		sys.exit()
 	if settings.get("DASH_HWID") == None or settings.get("DASH_HWID") == DASH_HWID:
-		print "TPLINK account is not defined. Please edit settings.json"
-		sys.exit()
+		print "Dash button ID is not defined. Please edit settings.json"
+		return
 
 	if settings.get("TPLINK_URL") == None:
 		settings["TPLINK_URL"] = TPLINK_URL
@@ -160,18 +160,19 @@ def arp_handler(pkt):
 	""" Handles sniffed ARP requests """
 	if pkt.haslayer(ARP):
 		if pkt[ARP].op == 1: #who-has request
-			if settings["DASH_HWID"] == "D:A:S:H:I:D":
-				print "Receive signal from a device : " + pkt[ARP].hwsrc
+			if settings["DASH_HWID"] == DASH_HWID:
+				print "Receive signal from a unknown device : " + pkt[ARP].hwsrc
 			if pkt[ARP].hwsrc == settings["DASH_HWID"]:
-				print "Dash button pressed " + pkt[ARP].hwsrc
+				print "Dash button pressed " + settings["DASH_HWID"]
 				switch_state()
 def main():
 	print "Starting Amazon Dash to TPLink Smartplug service"
 	load_settings()
-	if settings["DASH_HWID"] == "D:A:S:H:I:D":
+	if settings["DASH_HWID"] == DASH_HWID:
 		print "Scanning network: looking for a new Amazon Dash button... You can now press it"
+		print " Press it multiple times with a 5 sec pause to be sure it is your Dash we are detecting"
 	else:
-		print "Scanning network: You can press your Amazon Dash button"
+		print "Intercepting Dash " + settings["DASH_HWID"] + " enabled. You can use your Amazon Dash button"
 	sniff(prn=arp_handler, filter="arp", store=0)
 
 if __name__ == "__main__":
