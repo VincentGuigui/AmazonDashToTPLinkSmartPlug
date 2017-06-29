@@ -23,8 +23,10 @@ python DashToTPLinkPlug.py
 * Edit `settings.json` and set DASH_HWID
 
 # Configure your TPLInk SmartPlug HS100
-* Go through [Find TPLink Token and Smartplug Device ID article](http://arcturusenterprises.weebly.com/find-token--deviceid.html)
-* Edit `settings.json` and set TPLINK_TOKEN and TPLINK_DEVICEID
+* Edit `settings.json` 
+  * set TPLINK_EMAIL with the email you use in KASA / TPLINK app
+  * set TPLINK_PASSWORD with your actual KASA / TPLINK password
+  * set TPLINK_ALIAS with the name you give to your TPLINK device (it's case sensitive)
 
 # Starting the service for a long time
 You can run the script in background with a command like this:

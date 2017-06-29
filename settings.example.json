@@ -1,7 +1,7 @@
 {
   "TPLINK_EMAIL": "email@domain.com",
   "TPLINK_PASSWORD": "YourKasaPassword",
-  "TPLINK_DEVICEID": "12345678900987654321...",
+  "TPLINK_ALIAS": "My Living Room Light",
   "DASH_HWID": "D:A:S:H:I:D",
   "TPLINK_URL": "https://eu-wap.tplinkcloud.com/"
 }
