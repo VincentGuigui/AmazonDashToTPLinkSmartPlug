@@ -26,9 +26,9 @@ def load_settings():
 	else:
 		with open(SETTINGS_FILE_NAME, 'r') as settings_file:
 			settings = json.loads(settings_file.read())
-			
+
 	""" Verify settings values """
-	if settings.get("TPLINK_EMAIL") == None or settings.get("TPLINK_EMAIL") == TPLINK_EMAIL
+	if settings.get("TPLINK_EMAIL") == None or settings.get("TPLINK_EMAIL") == TPLINK_EMAIL:
 		print "TPLINK account (email) is not defined. Please edit settings.json"
 		sys.exit()
 	if settings.get("TPLINK_PASSWORD") == None or settings.get("TPLINK_PASSWORD") == TPLINK_PASSWORD:
@@ -77,10 +77,10 @@ def login_and_renew_token():
 		return
 
 def switch_state():
-    global settings
+	global settings
 
 	session = requests.Session()
-	
+
 	""" Get device id from Alias """
 	get_deviceList = {"method":"getDeviceList","params": {}}
 	resp_deviceList = session.post(TPLINK_URL_TOKEN, json = get_deviceList)
@@ -91,14 +91,19 @@ def switch_state():
 	if dict_deviceList.get("error_code") == -20651:
 		login_and_renew_token()
 		switch_state()
-		return	
+		return
 
 	""" Look for the deviceID """
-	for d in dict_deviceList["result"]["deviceList"]
-		if d["alias"] == TPLINK_ALIAS:
+	for d in dict_deviceList["result"]["deviceList"]:
+		if d["alias"] == settings["TPLINK_ALIAS"]:
+			print "Device '" + d["alias"] + "' ID is " + d["deviceId"]
 			settings["TPLINK_DEVICEID"] = d["deviceId"]
 			break
-			
+
+	if settings.get("TPLINK_DEVICEID") == None:
+		print "No TPLINK Device found with alias '" + settings["TPLINK_ALIAS"] + "'"
+		sys.exit()
+
 	""" Get device current relay_state """
 	get_sysinfo = {"method":"passthrough","params": {"deviceId": settings["TPLINK_DEVICEID"], \
 		"requestData": "{\"system\":{\"get_sysinfo\":{}}}" }}
@@ -130,26 +135,23 @@ def switch_state():
 		return
 
 	relay_state = dict_respData["system"]["get_sysinfo"]["relay_state"]
-	alias = dict_respData["system"]["get_sysinfo"]["alias"]
-	# print "current_state" + relay_state
 
 	if relay_state:
 		relay_state = "0"
-		print "Switching Off " + alias
+		print "Switching Off " + settings["TPLINK_ALIAS"]
 	else:
 		relay_state = "1"
-		print "Switching On " + alias
+		print "Switching On " + settings["TPLINK_ALIAS"]
 
 	""" Force refresh """
 	get_deviceList = {"method":"passthrough", "params": {"deviceId": settings["TPLINK_DEVICEID"], \
 		"requestData":"{\"schedule\":{\"get_next_action\":null}}"}}
 	resp_deviceList = session.post(TPLINK_URL_TOKEN, json = get_deviceList)
-	#print resp_deviceList.text
 
 	""" Set new relay_state """
 	post_relaystate = {"method":"passthrough", "params": {"deviceId": settings["TPLINK_DEVICEID"], \
 		"requestData":"{\"system\":{\"set_relay_state\":{\"state\":"+relay_state+"} } }" } }
-	#print post_relaystate
+
 	resp_poststate = session.post(TPLINK_URL_TOKEN, json=post_relaystate)
 	dict_poststate = json.loads(resp_poststate.text)
 	if dict_poststate["error_code"] != 0:
