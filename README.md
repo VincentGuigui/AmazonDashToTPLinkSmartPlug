@@ -3,8 +3,8 @@
 wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 rm get-pip.py
-python pip install requests
-python pip install scapy
+pip install requests
+pip install scapy
 ```
 
 # Configure your Amazon Dash Button
