@@ -43,7 +43,9 @@ def load_settings():
 
 	if settings.get("TPLINK_URL") == None:
 		settings["TPLINK_URL"] = TPLINK_URL
-	
+
+	if settings.get("TPLINK_TOKEN") == None:
+		settings["TPLINK_TOKEN"] = TPLINK_TOKEN 
 	TPLINK_URL_TOKEN = \
 		(settings["TPLINK_URL"] + "?{}={}").format("token", settings["TPLINK_TOKEN"])
 	TPLINK_URL_LOGIN = \
