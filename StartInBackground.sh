@@ -1,1 +1,1 @@
-python DashToTPLinkPlug.py >DashToTPLinkPlug.log 2>&1 &
+python -u DashToTPLinkPlug.py >DashToTPLinkPlug.log 2>&1 &
