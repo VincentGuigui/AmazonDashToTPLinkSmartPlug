@@ -3,6 +3,7 @@ import json
 import os.path
 import uuid
 import sys
+import datetime
 from scapy.all import *
 
 
@@ -81,6 +82,9 @@ def login_and_renew_token():
 def switch_state():
 	global settings
 
+	print "New event on " + \
+		datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 	session = requests.Session()
 
 	""" Get device id from Alias """
@@ -95,15 +99,24 @@ def switch_state():
 		switch_state()
 		return
 
+	if dict_deviceList.get("result") == None:
+		print "Error, no result in deviceList response"
+		print dict_deviceList
+		return
+
 	""" Look for the deviceID """
+	settings["TPLINK_DEVICEID"] = None
+	print "Account has", len(dict_deviceList["result"]["deviceList"]), "device(s)"
+
 	for d in dict_deviceList["result"]["deviceList"]:
+		print "  " + d["deviceName"] + " : " + d["alias"]
 		if d["alias"] == settings["TPLINK_ALIAS"]:
-			print "Device '" + d["alias"] + "' ID is " + d["deviceId"]
+			print "    DeviceId : " + d["deviceId"]
 			settings["TPLINK_DEVICEID"] = d["deviceId"]
 			break
 
 	if settings.get("TPLINK_DEVICEID") == None:
-		print "No TPLINK Device found with alias '" + settings["TPLINK_ALIAS"] + "'"
+		print "No online TPLINK Device found with alias '" + settings["TPLINK_ALIAS"] + ". Check Name and Remote Access activation for this device within Kasa app.'"
 		sys.exit()
 
 	""" Get device current relay_state """
