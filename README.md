@@ -40,4 +40,4 @@ a log file name DashToTPLinkPlug.log
 
 
 # Troubleshooting
-* if you encounter an "Token expired" error, verify that you are using a correct TPLINK_TOKEN
+* if you encounter an "Token expired" error, remove TPLINK_TOKEN from settings.json and restart the app
