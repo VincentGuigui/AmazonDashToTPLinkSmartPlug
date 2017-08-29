@@ -39,5 +39,6 @@ or
 a log file name DashToTPLinkPlug.log
 
 
-# Troubleshooting
-* if you encounter an "Token expired" error, remove TPLINK_TOKEN from settings.json and restart the app
+# Troubleshooting (have a look at the log file)
+* if you encounter a "Token expired" error, remove TPLINK_TOKEN from settings.json and restart the app
+* If you encounter a "Account is not binded to the device" error, you must remove and add again the device to your account using the Kasa app
